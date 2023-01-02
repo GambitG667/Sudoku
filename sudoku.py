@@ -24,10 +24,10 @@ clock = pg.time.Clock()
 font = pg.font.SysFont('couriernew', 20)
 big_font = pg.font.SysFont('couriernew', 60)
 
-text = font.render("YLLOU", True, BLACK)
 sudoku = create_sudoku()
 
-def draw_sels():
+
+def draw_sels(): #Служебная функция для рисования сетки
     for i in range(1,9):
         if i%3 == 0:
             pg.draw.line(sc, WHITE, (i*60,0),(i*60,540),3)
@@ -36,7 +36,8 @@ def draw_sels():
             pg.draw.line(sc, WHITE, (i*60,0),(i*60,540))
             pg.draw.line(sc, WHITE, (0,i*60),(540,i*60))
 
-def render():
+
+def render(): #функция рендера рисует сетку и либо значение, либо все возможные значения
     global sc
     sc.fill(BLACK)
     draw_sels()
@@ -54,21 +55,9 @@ def render():
                             text = font.render(f"{n*3+k+1}", True, BLUE)
                         sc.blit(text,(i*60+k*20+5,j*60+n*20))
 
-def render2():
-    sc.fill(BLACK)
-    for i in range(27):
-        for j in range(27):
-            if sudoku[i][j]:
-                text = font.render("1", True, WHITE)
-            else:
-                text = font.render("0", True, WHITE)
-            sc.blit(text,(i*20,j*20))
-
 
 running = True
-ply = False
-while running:
-
+while running: #рабочий цикл
     clock.tick(FPS)
     render()
 
@@ -82,7 +71,7 @@ while running:
                 i = i.pos[0]//20%3 + i.pos[1]//20%3*3
                 sudoku[x][y].UpdateSuperposition(i+1)
         elif i.type == pg.KEYDOWN:
-            if i.key == pg.K_r:
+            if i.key == pg.K_r: #рестарт, что бы не перезапускать
                 sudoku = create_sudoku()
 
     
